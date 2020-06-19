@@ -94,15 +94,6 @@ jobs:
         #########################################################################################
         #自定义添加其它功能请参考源码configs/templates/目录下的config文件。按照上面的格式添加即可
         #格式如下：
-        sed -i '/CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM/d' .config 
-        echo "CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM=y" >> .config #广工大DRCOM认证客户端
-        
-        sed -i '/CONFIG_FIRMWARE_INCLUDE_DOGCOM/d' .config 
-        echo "CONFIG_FIRMWARE_INCLUDE_DOGCOM=y" >> .config 
-        
-        sed -i '/CONFIG_FIRMWARE_INCLUDE_QOS/d' .config 
-        echo "CONFIG_FIRMWARE_INCLUDE_QOS=y" >> .config 
-        
         sed -i '/CONFIG_FIRMWARE_CPU_900MHZ/d' .config 
         echo "CONFIG_FIRMWARE_CPU_900MHZ=y" >> .config # Force MT7621 CPU clock to 900MHz (override Uboot settings)
         
