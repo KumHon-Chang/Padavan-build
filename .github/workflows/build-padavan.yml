@@ -1,5 +1,5 @@
 #修改TNAME: K2P-5.0 中的K2P-5.0为你需要编译的型号，注意名称要与configs/templates/目录下的名字相同
-name: MI-MINI_V0.4_hawkckf Padavan
+name: GHL_V0.3_hawkckf Padavan
 
 on: 
   release:
@@ -38,7 +38,7 @@ jobs:
         mkdir -p /opt/images/
     - name: Build Firmware
       env:
-        TNAME: MI-MINI
+        TNAME: GHL
       run: |
         cd /opt/rt-n56u/trunk
         if [ ! -f configs/templates/$TNAME.config ] ; then
@@ -78,8 +78,8 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=y" >> .config #阿里DDNS
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config #smartdns二进制文件
-        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=n" >> .config #集成v2ray执行文件（3.8M左右)，如果不集成，会从网上下载下来执行，不影响正常使用
-        echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=n" >> .config #集成trojan执行文件(1.1M左右)，如果不集成，会从网上下载下来执行，不影响正常使用
+        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config #集成v2ray执行文件（3.8M左右)，如果不集成，会从网上下载下来执行，不影响正常使用
+        echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=y" >> .config #集成trojan执行文件(1.1M左右)，如果不集成，会从网上下载下来执行，不影响正常使用
         echo "CONFIG_FIRMWARE_INCLUDE_KOOLPROXY=y" >> .config #KP广告过滤
         echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config #在线文件管理服务
         echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=n" >> .config #集成caddu执行文件，此文件有13M,请注意固件大小。如果不集成，会从网上下载下来执行，不影响正常使用
@@ -96,6 +96,18 @@ jobs:
         #格式如下：
         sed -i '/CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM/d' .config 
         echo "CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM=y" >> .config #广工大DRCOM认证客户端
+        
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_DOGCOM/d' .config 
+        echo "CONFIG_FIRMWARE_INCLUDE_DOGCOM=y" >> .config 
+        
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_QOS/d' .config 
+        echo "CONFIG_FIRMWARE_INCLUDE_QOS=y" >> .config 
+        
+        sed -i '/CONFIG_FIRMWARE_CPU_900MHZ/d' .config 
+        echo "CONFIG_FIRMWARE_CPU_900MHZ=y" >> .config # Force MT7621 CPU clock to 900MHz (override Uboot settings)
+        
+        sed -i '/CONFIG_FIRMWARE_CPU_SLEEP/d' .config 
+        echo "CONFIG_FIRMWARE_CPU_SLEEP=y" >> .config # Enable MT7621 CPU sleep mode (downclock to 220MHz on idle)
         #########################################################################################
         sudo ./clear_tree
         sudo ./build_firmware_modify $TNAME 0
