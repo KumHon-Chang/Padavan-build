@@ -1,5 +1,5 @@
 #修改TNAME: K2P-5.0 中的K2P-5.0为你需要编译的型号，注意名称要与configs/templates/目录下的名字相同
-name: MI-MINI_V0.2 Padavan
+name: MI-MINI_V0.4_hawkckf Padavan
 
 on: 
   release:
@@ -32,7 +32,7 @@ jobs:
         pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev gcc-multilib
     - name: Clone source code
       run: |
-        git clone --depth=1 https://github.com/chongshengB/rt-n56u.git /opt/rt-n56u
+        git clone --depth=1 https://github.com/hanwckf/rt-n56u.git /opt/rt-n56u
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
@@ -94,8 +94,8 @@ jobs:
         #########################################################################################
         #自定义添加其它功能请参考源码configs/templates/目录下的config文件。按照上面的格式添加即可
         #格式如下：
-        sed -i '/CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM/d' .config
-        echo "CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM=y" >> .config
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM/d' .config 
+        echo "CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM=y" >> .config #广工大DRCOM认证客户端
         #########################################################################################
         sudo ./clear_tree
         sudo ./build_firmware_modify $TNAME 0
